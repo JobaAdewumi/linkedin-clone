@@ -1,3 +1,4 @@
+import { TabsComponent } from './components/tabs/tabs.component';
 import { AllPostsComponent } from './components/all-posts/all-posts.component';
 import { ModalComponent } from './components/start-post/modal/modal.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -27,6 +28,7 @@ import { ProfileSummaryComponent } from './components/profile-summary/profile-su
     AdvertisingComponent,
     ModalComponent,
     AllPostsComponent,
+    TabsComponent,
   ],
 })
 export class HomePageModule {}
