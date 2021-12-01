@@ -38,4 +38,10 @@
             height: 48px;
         }
     }
+    .hide-scroll {
+        height: calc(100vh - 320px);
+        margin-left: -16px;
+        border-right: 16px solid #f3f2ef;
+        z-index: 2;
+    }
 }

@@ -32,11 +32,15 @@ export class AllPostsComponent implements OnInit {
       for (let post = 0; post < posts.length; post++) {
         this.allLoadedPosts.push(posts[post])
       }
+      if (isInitialLoad) event.target.complete();
+      this.skipPosts = this.skipPosts + 5;
+    }, (error) => {
+      console.log(error);
     })
   }
 
   loadData(event) {
-    this.getPosts(event)
+    this.getPosts(true, event)
   }
 
 }
