@@ -1,0 +1,40 @@
+<ion-content>
+  <div class="title-container">
+    <ion-text class="linkedin-text" color="primary">Linked</ion-text>
+    <ion-icon class="linkedin-icon" name="logo-linkedin" color="primary"></ion-icon>
+  </div>
+  <div class="subtitle-container">Make the most of your professional life</div>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <ion-card>
+      <ng-container *ngIf="submissionType === 'join'">
+        <ion-item>
+          <ion-label position="floating">First name</ion-label>
+          <ion-input #firstNameInput="ngModel" ngModel type="text" name="firstName" required></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="!firstNameInput.valid && firstNameInput.touched">Please enter your first name</ion-text>
+      </ng-container>
+      <ng-container *ngIf="submissionType === 'join'">
+        <ion-item>
+          <ion-label position="floating">Last name</ion-label>
+          <ion-input #lastNameInput="ngModel" ngModel type="text" name="lastName" required></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="!lastNameInput.valid && lastNameInput.touched">Please enter your first name</ion-text>
+      </ng-container>
+      <ion-item>
+        <ion-label position="floating">First name</ion-label>
+        <ion-input #firstNameInput="ngModel" ngModel type="text" name="firstName" required></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!firstNameInput.valid && firstNameInput.touched">Please enter your first name</ion-text>
+      <ion-item>
+        <ion-label position="floating">Last name</ion-label>
+        <ion-input #lastNameInput="ngModel" ngModel type="text" name="lastName" required></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!lastNameInput.valid && lastNameInput.touched">Please enter your first name</ion-text>
+      
+    </ion-card>
+  </form>
+
+</ion-content>
+
+
