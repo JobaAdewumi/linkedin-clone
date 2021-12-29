@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { FriendRequest } from '../../models/friendRequest';
+import { ConnectionProfileService } from '../../services/connection-profile.service';
+import { FriendRequestPopoverComponent } from './friend-request-popover/friend-request-popover.component';
 import { PopoverComponent } from './popover/popover.component';
 
 @Component({
@@ -7,11 +12,32 @@ import { PopoverComponent } from './popover/popover.component';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  userFullImagePath: string;
+  private userImagePathSubscription: Subscription;
 
-  constructor(public popoverController: PopoverController) { }
+  // friendRequests: FriendRequest[];
+  private friendRequestsSubscription: Subscription;
 
-  ngOnInit() {}
+  constructor(
+    public popoverController: PopoverController,
+    private authService: AuthService,
+    public connectionProfileService: ConnectionProfileService
+  ) {}
+
+  ngOnInit() {
+    this.userImagePathSubscription =
+      this.authService.userFullImagePath.subscribe((fullImagePath: string) => {
+        this.userFullImagePath = fullImagePath;
+      });
+
+    this.friendRequestsSubscription = this.connectionProfileService
+      .getFriendRequests().subscribe((friendRequests: FriendRequest[]) => {
+        this.connectionProfileService.friendRequests = friendRequests.filter(
+          (friendRequest: FriendRequest) => friendRequest.status === 'pending'
+        );
+      });
+  }
 
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
@@ -24,5 +50,23 @@ export class HeaderComponent implements OnInit {
 
     const { role } = await popover.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
+  }
+
+  async presentFriendRequestPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: FriendRequestPopoverComponent,
+      cssClass: 'my-custom-class',
+      event: ev,
+      showBackdrop: false,
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
+
+  ngOnDestroy() {
+    this.userImagePathSubscription.unsubscribe();
+    this.friendRequestsSubscription.unsubscribe();
   }
 }

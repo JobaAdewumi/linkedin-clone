@@ -12,23 +12,26 @@ import { HomePageRoutingModule } from './home-routing.module';
 import { StartPostComponent } from './components/start-post/start-post.component';
 import { AdvertisingComponent } from './components/advertising/advertising.component';
 import { ProfileSummaryComponent } from './components/profile-summary/profile-summary.component';
-
+import { ConnectionProfileComponent } from './components/connection-profile/connection-profile.component';
+import { PopoverComponent } from './components/header/popover/popover.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { FriendRequestPopoverComponent } from './components/header/friend-request-popover/friend-request-popover.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
-  ],
-  declarations: [HomePage,
-     HeaderComponent,
-    ProfileSummaryComponent, 
-    StartPostComponent, 
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
+  declarations: [
+    HomePage,
+    HeaderComponent,
+    ProfileSummaryComponent,
+    StartPostComponent,
     AdvertisingComponent,
     ModalComponent,
     AllPostsComponent,
     TabsComponent,
+    ConnectionProfileComponent,
+    PopoverComponent,
+    UserProfileComponent,
+    FriendRequestPopoverComponent,
   ],
 })
 export class HomePageModule {}

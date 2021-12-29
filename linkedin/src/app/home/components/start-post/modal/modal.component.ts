@@ -1,18 +1,43 @@
 import { ModalController } from '@ionic/angular';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { take } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit {
-  @ViewChild('form') form: NgForm
+export class ModalComponent implements OnInit, OnDestroy {
+  @ViewChild('form') form: NgForm;
 
-  constructor(public modalController: ModalController) { }
+  @Input() postId?: number; 
 
-  ngOnInit() {}
+  userFullImagePath: string;
+  private userImagePathSubscription: Subscription;
+
+  fullName$ = new BehaviorSubject<string>(null);
+  fullName = '';
+
+  constructor(public modalController: ModalController, private authService: AuthService) { }
+
+  ngOnInit() {
+    this.authService.userFullName
+      .pipe(take(1))
+      .subscribe((fullName: string) => {
+        this.fullName = fullName;
+        this.fullName$.next(fullName);
+      });
+
+    this.userImagePathSubscription = this.authService.userFullImagePath.subscribe(
+      (fullImagePath: string) => {
+        console.log(1, fullImagePath);
+        this.userFullImagePath = fullImagePath
+      }
+    );
+  }
 
   onDismiss() {
     this.modalController.dismiss(null, 'dismiss')
@@ -25,11 +50,14 @@ export class ModalComponent implements OnInit {
       {
         post: {
           body,
-          createdAt: new Date(),
         },
       },
       'post'
     );
+  }
+
+  ngOnDestroy() {
+    this.userImagePathSubscription.unsubscribe();
   }
 
 }
