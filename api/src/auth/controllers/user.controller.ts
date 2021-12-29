@@ -18,7 +18,7 @@ import { Observable, of } from 'rxjs';
 import { JwtGuard } from '../guards/jwt.guard';
 import { saveImageToStorage } from '../helpers/image-storage';
 import { UserService } from '../services/user.service';
-import { User } from '../models/user.interface';
+import { User } from '../models/user.class';
 import {
   FriendRequest,
   FriendRequestStatus,

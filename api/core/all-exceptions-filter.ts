@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as fs from 'fs';
 import {
   CustomHttpExceptionResponse,
   HttpExceptionResponse,
@@ -32,7 +33,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       errorMessage = 'Critical internal server error occured!';
     }
     const errorResponse = this.getErrorResponse(status, errorMessage, request);
-    this.logError(errorResponse, request, exception);
+      const errorLog: string = this.getErrorLog(errorResponse, request, exception);
+      this.writeErrorLogToFile(errorLog);
+      response.status(status).json(errorResponse);
   }
 
   private getErrorResponse = (
@@ -47,16 +50,23 @@ export class AllExceptionsFilter implements ExceptionFilter {
     timeStamp: new Date(),
   });
 
-  private logError = (
+  private getErrorLog = (
     errorResponse: CustomHttpExceptionResponse,
     request: Request,
     exception: unknown,
-  ): void => {
+  ): string => {
     const { statusCode, error } = errorResponse;
     const { method, url } = request;
     const errorLog = `Response Code: ${statusCode} - Method: ${method} - URL: ${url}\n\n
+    ${JSON.stringify(errorResponse)}\n\n
         User: ${JSON.stringify(request.user ?? 'Not signed in')}\n\n
         ${exception instanceof HttpException ? exception.stack : error}\n\n`;
-    console.log(7, errorLog);
-  };
+      return errorLog;
+    };
+    
+    private writeErrorLogToFile = (errorLog: string): void => {
+        fs.appendFile('error.log', errorLog, 'utf8', (err) => {
+            if (err) throw err;
+        })
+    }
 }

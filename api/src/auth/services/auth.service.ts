@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import * as bcrypt from 'bcrypt';
 import { from, map, Observable, switchMap } from 'rxjs';
-import { User } from './../models/user.interface';
+import { User } from '../models/user.class';
 import { UserEntity } from './../models/user.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -54,8 +54,8 @@ export class AuthService {
       switchMap((user: User) =>
       { 
         if (!user) {
-          // // throw new HttpException('Not found', HttpStatus.NOT_FOUND);
-          // throw new HttpException({ status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' }, HttpStatus.NOT_FOUND);
+          // throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+          throw new HttpException({ status: HttpStatus.NOT_FOUND, error: 'Invalid Credentials' }, HttpStatus.NOT_FOUND);
         }
         return from(bcrypt.compare(password, user.password)).pipe(
           map((isValidPassword: boolean) => {
