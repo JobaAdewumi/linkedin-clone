@@ -32,7 +32,7 @@ export class ProfileSummaryComponent implements OnInit, OnDestroy {
   fullName$ = new BehaviorSubject<string>(null);
   fullName = '';
 
-  
+
 
   constructor(private authService: AuthService, public bannerColorService: BannerColorService) {}
 
@@ -54,13 +54,12 @@ export class ProfileSummaryComponent implements OnInit, OnDestroy {
 
     this.userImagePathSubscription = this.authService.userFullImagePath.subscribe(
       (fullImagePath: string) => {
-        console.log(1, fullImagePath);
         this.userFullImagePath = fullImagePath
       }
     );
   }
 
- 
+
 
   onFileSelect(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];

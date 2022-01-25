@@ -21,7 +21,6 @@ export class StartPostComponent implements OnInit, OnDestroy {
 
     this.userImagePathSubscription = this.authService.userFullImagePath.subscribe(
       (fullImagePath: string) => {
-        console.log(1, fullImagePath);
         this.userFullImagePath = fullImagePath;
       });
   }

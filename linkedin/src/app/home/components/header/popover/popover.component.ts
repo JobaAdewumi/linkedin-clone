@@ -27,10 +27,9 @@ export class PopoverComponent implements OnInit, OnDestroy {
         this.fullName = fullName;
         this.fullName$.next(fullName);
       });
-      
+
     this.userImagePathSubscription = this.authService.userFullImagePath.subscribe(
       (fullImagePath: string) => {
-        console.log(1, fullImagePath);
         this.userFullImagePath = fullImagePath
       }
     );

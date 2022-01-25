@@ -1,0 +1,4 @@
+DELETE FROM public."user"
+	WHERE email = 'test@test.com';
+	
+	SELECT * FROM public."user"

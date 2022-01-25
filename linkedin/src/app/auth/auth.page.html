@@ -27,13 +27,13 @@
         <ion-input #emailInput="ngModel" ngModel type="email" name="email" required></ion-input>
       </ion-item>
       <ion-text color="danger" *ngIf="!emailInput.valid && emailInput.touched">Please enter your email address.</ion-text>
-      
+
       <ion-item>
         <ion-label position="floating">Password</ion-label>
         <ion-input #passwordInput="ngModel" ngModel type="password" name="password" required></ion-input>
       </ion-item>
       <ion-text color="danger" *ngIf="!passwordInput.valid && passwordInput.touched">Please enter your password.</ion-text>
-      
+
       <p *ngIf="submissionType === 'join'" class="terms-and-conditions">
         By clicking Agree & Join, you agree to the LinkedIn
         <ion-text color="primary">User Agreement</ion-text>,

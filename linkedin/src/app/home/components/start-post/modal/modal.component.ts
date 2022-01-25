@@ -13,7 +13,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 export class ModalComponent implements OnInit, OnDestroy {
   @ViewChild('form') form: NgForm;
 
-  @Input() postId?: number; 
+  @Input() postId?: number;
 
   userFullImagePath: string;
   private userImagePathSubscription: Subscription;
@@ -33,7 +33,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     this.userImagePathSubscription = this.authService.userFullImagePath.subscribe(
       (fullImagePath: string) => {
-        console.log(1, fullImagePath);
         this.userFullImagePath = fullImagePath
       }
     );
