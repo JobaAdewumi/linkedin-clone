@@ -32,6 +32,7 @@
     "ajv": "^6.9.1",
     "file-type": "^17.0.2",
     "jwt-decode": "^3.1.2",
+    "ngx-socket-io": "^4.2.0",
     "node-stream": "^1.7.0",
     "rxjs": "~6.6.0",
     "strtok3": "^7.0.0-alpha.7",

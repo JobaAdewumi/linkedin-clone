@@ -1,28 +1,3 @@
 {
-    "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#1757a4",
-        "activityBar.activeBorder": "#540c2c",
-        "activityBar.background": "#1757a4",
-        "activityBar.foreground": "#e7e7e7",
-        "activityBar.inactiveForeground": "#e7e7e799",
-        "activityBarBadge.background": "#540c2c",
-        "activityBarBadge.foreground": "#e7e7e7",
-        "sash.hoverBorder": "#1757a4",
-        "statusBar.background": "#113f77",
-        "statusBar.foreground": "#e7e7e7",
-        "statusBarItem.hoverBackground": "#1757a4",
-        "statusBarItem.remoteBackground": "#113f77",
-        "statusBarItem.remoteForeground": "#e7e7e7",
-        "titleBar.activeBackground": "#113f77",
-        "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveBackground": "#113f7799",
-        "titleBar.inactiveForeground": "#e7e7e799",
-        "editorGroup.border": "#1757a4",
-        "panel.border": "#1757a4",
-        "sideBar.border": "#1757a4",
-        "statusBar.border": "#113f77",
-        "tab.activeBorder": "#1757a4",
-        "titleBar.border": "#113f77"
-    },
-    "peacock.color": "#113f77"
+    "vsicons.presets.nestjs": true
 }

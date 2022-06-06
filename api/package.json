@@ -27,7 +27,9 @@
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/platform-socket.io": "^8.4.6",
     "@nestjs/typeorm": "^8.0.2",
+    "@nestjs/websockets": "^8.4.6",
     "@types/bcrypt": "^5.0.0",
     "@types/passport-jwt": "^3.0.6",
     "D": "^1.0.0",
@@ -42,6 +44,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "socket.io": "^4.5.1",
     "typeorm": "^0.2.41",
     "uuid": "^8.3.2"
   },

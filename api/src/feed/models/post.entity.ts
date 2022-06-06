@@ -21,3 +21,4 @@ export class FeedPostEntity {
   @ManyToOne(() => UserEntity, (userentity) => userentity.feedPosts)
   author: UserEntity;
 }
+
