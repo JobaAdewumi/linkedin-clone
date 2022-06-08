@@ -161,4 +161,30 @@ export class UserService {
       }),
     );
   }
+
+  getFriends(currentUser: User): Observable<User[]> {
+    return from(
+      this.friendRequestRepository.find({
+        where: [
+          { creator: currentUser, status: 'accepted' },
+          { reciever: currentUser, status: 'accepted' },
+        ],
+        relations: ['creator', 'reciever'],
+      }),
+    ).pipe(
+      switchMap((friends: FriendRequest[]) => {
+        let userIds: number[] = [];
+
+        friends.forEach((friend: FriendRequest) => {
+          if (friend.creator.id === currentUser.id) {
+            userIds.push(friend.reciever.id);
+          } else if (friend.reciever.id === currentUser.id) {
+            userIds.push(friend.creator.id);
+          }
+        });
+
+        return from(this.userRepository.findByIds(userIds));
+      }),
+    );
+  }
 }

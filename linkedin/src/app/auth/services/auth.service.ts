@@ -43,8 +43,8 @@ export class AuthService {
   get userRole(): Observable<Role> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
-        return of(user.role);
-        //? If you want to add role based authorisation you can add if else statements
+        return of(user?.role); //? for after signed out, but still subscribed
+        //? If you want to add role based authorization you can add if else statements
         //* Return false if admin return false
         //* You can have another guard is premium return false and for user and so on
       })
@@ -62,6 +62,9 @@ export class AuthService {
   get userFullName(): Observable<string> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
+        if (!user) {
+          return of(null);
+        }
         const fullName = user.firstName + ' ' + user.lastName;
         return of(fullName);
       })

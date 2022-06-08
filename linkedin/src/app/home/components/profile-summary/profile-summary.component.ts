@@ -4,7 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, from, of, pipe, Subscription } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
-import { Role } from 'src/app/auth/models/user.model';
+import { Role, User } from './../../../auth/models/user.model';
 import { AuthService } from './../../../auth/services/auth.service';
 
 type validFileExtension = 'png' | 'jpg';
@@ -29,37 +29,51 @@ export class ProfileSummaryComponent implements OnInit, OnDestroy {
   userFullImagePath: string;
   private userImagePathSubscription: Subscription;
 
+  private userSubscription: Subscription;
+
   fullName$ = new BehaviorSubject<string>(null);
   fullName = '';
 
-
-
-  constructor(private authService: AuthService, public bannerColorService: BannerColorService) {}
+  constructor(
+    private authService: AuthService,
+    public bannerColorService: BannerColorService
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
       file: new FormControl(null),
     });
 
-    this.authService.userRole.pipe(take(1)).subscribe((role: Role) => {
-      this.bannerColorService.bannerColors = this.bannerColorService.getBannerColors(role);
-    });
-
-    this.authService.userFullName
-      .pipe(take(1))
-      .subscribe((fullName: string) => {
-        this.fullName = fullName;
-        this.fullName$.next(fullName);
+    this.userImagePathSubscription =
+      this.authService.userFullImagePath.subscribe((fullImagePath: string) => {
+        this.userFullImagePath = fullImagePath;
       });
 
-    this.userImagePathSubscription = this.authService.userFullImagePath.subscribe(
-      (fullImagePath: string) => {
-        this.userFullImagePath = fullImagePath
+    this.userSubscription = this.authService.userStream.subscribe(
+      (user: User) => {
+        if (user?.role) {
+          this.bannerColorService.bannerColors =
+            this.bannerColorService.getBannerColors(user.role);
+        }
+
+        if (user && user?.firstName && user?.lastName) {
+          this.fullName = user.firstName + ' ' + user.lastName;
+          this.fullName$.next(this.fullName);
+        }
       }
     );
+
+    // this.authService.userRole.pipe(take(1)).subscribe((role: Role) => {
+    //   this.bannerColorService.bannerColors = this.bannerColorService.getBannerColors(role);
+    // });
+
+    // this.authService.userFullName
+    //   .pipe(take(1))
+    //   .subscribe((fullName: string) => {
+    //     this.fullName = fullName;
+    //     this.fullName$.next(fullName);
+    //   });
   }
-
-
 
   onFileSelect(event: Event): void {
     const file: File = (event.target as HTMLInputElement).files[0];
@@ -105,6 +119,7 @@ export class ProfileSummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.userSubscription.unsubscribe();
     this.userImagePathSubscription.unsubscribe();
   }
 }

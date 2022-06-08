@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Post } from '../models/Post';
 import { environment } from 'src/environments/environment';
 import { catchError, take, tap } from 'rxjs/operators';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Injectable({
@@ -12,23 +11,9 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 export class PostService {
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
-    private errorHandlerService: ErrorHandlerService
-  ) {
-    this.authService
-      .getUserImageName()
-      .pipe(
-        take(1),
-        tap(({ imageName }) => {
-          const defaultImagePath = 'blank-profile-picture.png';
 
-          this.authService
-            .updateUserImagePath(imageName || defaultImagePath)
-            .subscribe();
-        })
-      )
-      .subscribe();
-  }
+    private errorHandlerService: ErrorHandlerService
+  ) {}
 
   private httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
