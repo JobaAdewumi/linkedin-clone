@@ -31,19 +31,24 @@ export class ConnectionProfileService {
     return this.http.post<FriendRequest | { error: string }>(
       `${environment.baseApiUrl}/user/friend-request/send/${id}`,
       {},
-      this.httpOptions);
+      this.httpOptions
+    );
   }
 
   getFriendRequests(): Observable<FriendRequest[]> {
     return this.http.get<FriendRequest[]>(
-      `${environment.baseApiUrl}/user/friend-request/me/recieved-requests`
+      `${environment.baseApiUrl}/user/friend-request/me/received-requests`
     );
   }
 
-  respondToFriendRequest(id: number, statusResponse: 'accepted' | 'declined'): Observable<FriendRequest> {
+  respondToFriendRequest(
+    id: number,
+    statusResponse: 'accepted' | 'declined'
+  ): Observable<FriendRequest> {
     return this.http.put<FriendRequest>(
       `${environment.baseApiUrl}/user/friend-request/response/${id}`,
       { status: statusResponse },
-      this.httpOptions);
+      this.httpOptions
+    );
   }
 }

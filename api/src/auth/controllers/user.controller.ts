@@ -125,7 +125,7 @@ export class UserController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('friend-request/me/recieved-requests')
+  @Get('friend-request/me/received-requests')
   getFriendRequestFromRecipients(@Request() req): Observable<FriendRequest[]> {
     return this.userService.getFriendRequestFromRecipients(req.user);
   }

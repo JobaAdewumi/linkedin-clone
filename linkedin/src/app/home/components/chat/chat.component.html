@@ -18,7 +18,12 @@
         </ion-button>
       </div>
     </div>
-    <div class="friends" *ngFor="let friend of friends">
+    <div
+      *ngFor="let friend of friends; let i = index"
+      (click)="openConversation(friend, i)"
+      class="friend"
+      [ngClass]="{ 'selected-conversation': selectedConversationIndex === i }"
+    >
       <ion-grid>
         <ion-row class="ion-align-items-center ion-justify-content-center">
           <ion-col size="auto">
@@ -29,6 +34,7 @@
                   'http://localhost:3000/api/feed/image/' + friend.imagePath
                 "
               ></ion-img>
+
               <ng-template #blankProfilePicture>
                 <ion-img
                   [src]="
@@ -52,7 +58,8 @@
     <div class="top-panel">
       <div class="friend-name-role">
         <ion-text style="font-weight: 500" color="dark"
-          >Firstname Lastname</ion-text
+          >{{ friend?.firstName || "Loading..." }}
+          {{ friend?.lastName }}</ion-text
         >
         <ion-text color="dark">Full Stack Developer</ion-text>
       </div>
@@ -78,14 +85,17 @@
         <ion-col size="auto">
           <ion-avatar>
             <!-- TODO: Get image dynamically -->
-            <ion-img
-              *ngIf="userFullImagePath"
-              [src]="userFullImagePath"
-            ></ion-img>
+            <ion-img [src]="deriveFullImagePath(message.user)"></ion-img>
           </ion-avatar>
         </ion-col>
         <ion-col>
-          <p>{{ message }}</p>
+          <p>
+            <span style="font-weight: 500"
+              >{{ message.user.firstName }} {{ message.user.lastName }}</span
+            >
+            - {{ message.createdAt | date: "short" }}
+          </p>
+          <p>{{ message.message }}</p>
         </ion-col>
       </ion-row>
     </ion-grid>

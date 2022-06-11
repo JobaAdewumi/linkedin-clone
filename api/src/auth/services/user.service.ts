@@ -50,7 +50,7 @@ export class UserService {
     );
   }
 
-  hasRequestbeenSentOrRecieved(
+  hasRequestbeenSentOrreceived(
     creator: User,
     reciever: User,
   ): Observable<boolean> {
@@ -78,12 +78,12 @@ export class UserService {
 
     return this.findUserById(recieverId).pipe(
       switchMap((reciever: User) => {
-        return this.hasRequestbeenSentOrRecieved(creator, reciever).pipe(
-          switchMap((hasRequestbeenSentOrRecieved: boolean) => {
-            if (hasRequestbeenSentOrRecieved)
+        return this.hasRequestbeenSentOrreceived(creator, reciever).pipe(
+          switchMap((hasRequestbeenSentOrreceived: boolean) => {
+            if (hasRequestbeenSentOrreceived)
               return of({
                 error:
-                  'A friend request has already been sent or recieved to your account!',
+                  'A friend request has already been sent or received to your account!',
               });
             let friendRequest: FriendRequest = {
               creator,
