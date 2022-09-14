@@ -21,7 +21,6 @@ export class ConversationService {
     private readonly messageRepository: Repository<MessageEntity>,
   ) {}
 
-  //! Shahs of sunset
   getConversation(
     creatorId: number,
     friendId: number,
